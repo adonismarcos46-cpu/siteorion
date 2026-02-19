@@ -85,7 +85,8 @@ async def get_testimonials(approved: bool = True):
     """Get all testimonials"""
     try:
         query = {"approved": approved} if approved is not None else {}
-        testimonials = await testimonials_collection.find(query, {"_id": 0}).to_list(length=None)
+        # Limit testimonials to prevent unbounded queries in production
+        testimonials = await testimonials_collection.find(query, {"_id": 0}).limit(50).to_list(length=None)
         
         return {
             "success": True,
