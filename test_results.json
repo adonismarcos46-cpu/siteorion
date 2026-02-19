@@ -1,0 +1,186 @@
+{
+  "timestamp": "2026-02-19T22:02:29.573025",
+  "backend_url": "https://digital-studio-53.preview.emergentagent.com/api",
+  "summary": {
+    "total_tests": 25,
+    "passed": 25,
+    "failed": 0
+  },
+  "results": [
+    {
+      "test": "Health Check",
+      "success": true,
+      "details": "Status: healthy",
+      "timestamp": "2026-02-19T22:02:27.844446",
+      "response_data": null
+    },
+    {
+      "test": "GET /projects (all)",
+      "success": true,
+      "details": "Returned 8 projects",
+      "timestamp": "2026-02-19T22:02:27.931328",
+      "response_data": null
+    },
+    {
+      "test": "GET /projects (category=sites)",
+      "success": true,
+      "details": "Returned 2 projects",
+      "timestamp": "2026-02-19T22:02:28.004302",
+      "response_data": null
+    },
+    {
+      "test": "GET /projects (category=apps)",
+      "success": true,
+      "details": "Returned 2 projects",
+      "timestamp": "2026-02-19T22:02:28.071116",
+      "response_data": null
+    },
+    {
+      "test": "GET /projects (category=landing)",
+      "success": true,
+      "details": "Returned 2 projects",
+      "timestamp": "2026-02-19T22:02:28.136136",
+      "response_data": null
+    },
+    {
+      "test": "GET /projects (featured=true)",
+      "success": true,
+      "details": "Returned 3 projects",
+      "timestamp": "2026-02-19T22:02:28.210881",
+      "response_data": null
+    },
+    {
+      "test": "GET /projects (featured=false)",
+      "success": true,
+      "details": "Returned 5 projects",
+      "timestamp": "2026-02-19T22:02:28.288380",
+      "response_data": null
+    },
+    {
+      "test": "GET /projects (limit=3)",
+      "success": true,
+      "details": "Returned 3 projects",
+      "timestamp": "2026-02-19T22:02:28.355097",
+      "response_data": null
+    },
+    {
+      "test": "GET /projects/1",
+      "success": true,
+      "details": "Project: E-commerce Tecnologia Premium",
+      "timestamp": "2026-02-19T22:02:28.419140",
+      "response_data": null
+    },
+    {
+      "test": "GET /projects/2",
+      "success": true,
+      "details": "Project: App de Gest\u00e3o Financeira",
+      "timestamp": "2026-02-19T22:02:28.489495",
+      "response_data": null
+    },
+    {
+      "test": "GET /projects/3",
+      "success": true,
+      "details": "Project: Landing Page Imobili\u00e1ria",
+      "timestamp": "2026-02-19T22:02:28.556606",
+      "response_data": null
+    },
+    {
+      "test": "GET /projects/4",
+      "success": true,
+      "details": "Project: Campanha Redes Sociais - Moda",
+      "timestamp": "2026-02-19T22:02:28.627849",
+      "response_data": null
+    },
+    {
+      "test": "GET /projects/5",
+      "success": true,
+      "details": "Project: Site Institucional Advocacia",
+      "timestamp": "2026-02-19T22:02:28.693088",
+      "response_data": null
+    },
+    {
+      "test": "GET /projects/6",
+      "success": true,
+      "details": "Project: App Delivery Restaurante",
+      "timestamp": "2026-02-19T22:02:28.774335",
+      "response_data": null
+    },
+    {
+      "test": "GET /projects/7",
+      "success": true,
+      "details": "Project: Gest\u00e3o de M\u00eddias - Fitness",
+      "timestamp": "2026-02-19T22:02:28.846401",
+      "response_data": null
+    },
+    {
+      "test": "GET /projects/8",
+      "success": true,
+      "details": "Project: Landing Page SaaS",
+      "timestamp": "2026-02-19T22:02:28.916792",
+      "response_data": null
+    },
+    {
+      "test": "GET /projects/999 (invalid)",
+      "success": true,
+      "details": "Correctly returned 404",
+      "timestamp": "2026-02-19T22:02:28.980046",
+      "response_data": null
+    },
+    {
+      "test": "GET /testimonials (default)",
+      "success": true,
+      "details": "Returned 4 approved testimonials",
+      "timestamp": "2026-02-19T22:02:29.053858",
+      "response_data": null
+    },
+    {
+      "test": "GET /testimonials (approved=false)",
+      "success": true,
+      "details": "Returned 0 non-approved testimonials",
+      "timestamp": "2026-02-19T22:02:29.128264",
+      "response_data": null
+    },
+    {
+      "test": "POST /contact (valid)",
+      "success": true,
+      "details": "Contact form submitted successfully",
+      "timestamp": "2026-02-19T22:02:29.220187",
+      "response_data": null
+    },
+    {
+      "test": "POST /contact (missing name)",
+      "success": true,
+      "details": "Correctly rejected with 422",
+      "timestamp": "2026-02-19T22:02:29.283133",
+      "response_data": null
+    },
+    {
+      "test": "POST /contact (invalid email)",
+      "success": true,
+      "details": "Correctly rejected with 422",
+      "timestamp": "2026-02-19T22:02:29.351688",
+      "response_data": null
+    },
+    {
+      "test": "POST /contact (message too short)",
+      "success": true,
+      "details": "Correctly rejected with 422",
+      "timestamp": "2026-02-19T22:02:29.435797",
+      "response_data": null
+    },
+    {
+      "test": "POST /contact (missing service)",
+      "success": true,
+      "details": "Correctly rejected with 422",
+      "timestamp": "2026-02-19T22:02:29.512427",
+      "response_data": null
+    },
+    {
+      "test": "GET /stats",
+      "success": true,
+      "details": "All required stats fields present",
+      "timestamp": "2026-02-19T22:02:29.572880",
+      "response_data": null
+    }
+  ]
+}
