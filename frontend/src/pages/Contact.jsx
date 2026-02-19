@@ -6,6 +6,7 @@ import { Textarea } from '../components/ui/textarea';
 import { Label } from '../components/ui/label';
 import { Mail, Instagram, Phone, Send, CheckCircle } from 'lucide-react';
 import { useToast } from '../hooks/use-toast';
+import { contactApi } from '../services/api';
 
 const Contact = () => {
   const { toast } = useToast();
