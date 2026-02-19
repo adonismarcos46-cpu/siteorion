@@ -35,9 +35,9 @@ async def get_projects(
         if featured is not None:
             query["featured"] = featured
         
-        cursor = projects_collection.find(query, {"_id": 0})
-        if limit:
-            cursor = cursor.limit(limit)
+        # Default limit to prevent unbounded queries in production
+        default_limit = limit if limit else 100
+        cursor = projects_collection.find(query, {"_id": 0}).limit(default_limit)
         
         projects = await cursor.to_list(length=None)
         
