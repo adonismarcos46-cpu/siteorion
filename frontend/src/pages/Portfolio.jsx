@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, CardContent } from '../components/ui/card';
 import { Button } from '../components/ui/button';
 import { Tabs, TabsList, TabsTrigger } from '../components/ui/tabs';
 import { ExternalLink } from 'lucide-react';
-import { portfolioProjects, categories } from '../mock/mockData';
+import { categories } from '../mock/mockData';
+import { projectsApi } from '../services/api';
 
 const Portfolio = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
