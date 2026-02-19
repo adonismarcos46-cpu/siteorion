@@ -8,11 +8,36 @@ import { projectsApi } from '../services/api';
 
 const Portfolio = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
+  const [projects, setProjects] = useState([]);
+  const [filteredProjects, setFilteredProjects] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const filteredProjects =
-    selectedCategory === 'all'
-      ? portfolioProjects
-      : portfolioProjects.filter((p) => p.category === selectedCategory);
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        setLoading(true);
+        const response = await projectsApi.getAll();
+        if (response.success) {
+          setProjects(response.data);
+          setFilteredProjects(response.data);
+        }
+      } catch (error) {
+        console.error('Error fetching projects:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProjects();
+  }, []);
+
+  useEffect(() => {
+    if (selectedCategory === 'all') {
+      setFilteredProjects(projects);
+    } else {
+      setFilteredProjects(projects.filter((p) => p.category === selectedCategory));
+    }
+  }, [selectedCategory, projects]);
 
   return (
     <div className="min-h-screen pt-20">
