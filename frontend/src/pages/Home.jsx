@@ -9,12 +9,53 @@ import * as Icons from 'lucide-react';
 
 const Home = () => {
   const navigate = useNavigate();
+  const [stats, setStats] = useState({ projectsCompleted: '150+', clientsSatisfied: '80+', yearsExperience: '5+', successRate: '98%' });
+  const [featuredProjects, setFeaturedProjects] = useState([]);
+  const [testimonials, setTestimonials] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        
+        // Fetch stats
+        const statsResponse = await statsApi.get();
+        if (statsResponse.success) {
+          setStats(statsResponse.data);
+        }
+        
+        // Fetch featured projects
+        const projectsResponse = await projectsApi.getFeatured();
+        if (projectsResponse.success) {
+          setFeaturedProjects(projectsResponse.data.slice(0, 3));
+        }
+        
+        // Fetch testimonials
+        const testimonialsResponse = await testimonialsApi.getAll();
+        if (testimonialsResponse.success) {
+          setTestimonials(testimonialsResponse.data);
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const scrollToContact = () => {
     document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const featuredProjects = portfolioProjects.filter(p => p.featured).slice(0, 3);
+  const statsArray = [
+    { label: 'Projetos Concluídos', value: stats.projectsCompleted },
+    { label: 'Clientes Satisfeitos', value: stats.clientsSatisfied },
+    { label: 'Anos de Experiência', value: stats.yearsExperience },
+    { label: 'Taxa de Sucesso', value: stats.successRate }
+  ];
 
   return (
     <div className="min-h-screen">
