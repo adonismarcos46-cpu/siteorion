@@ -268,7 +268,7 @@ const Contact = () => {
           </p>
           <Button
             size="lg"
-            onClick={() => window.open('https://wa.me/', '_blank')}
+            onClick={() => window.open('https://wa.me/5581999464238', '_blank')}
             className="bg-green-600 hover:bg-green-700 text-white px-12 py-6 text-lg"
           >
             <Phone className="mr-2 w-5 h-5" />
