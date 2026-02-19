@@ -30,22 +30,35 @@ const Contact = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Mock submission - will be replaced with backend API
-    setTimeout(() => {
+    try {
+      const response = await contactApi.submit(formData);
+      
+      if (response.success) {
+        toast({
+          title: 'Mensagem enviada com sucesso!',
+          description: response.message || 'Entraremos em contato em breve.',
+          duration: 5000
+        });
+        
+        // Reset form
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          service: '',
+          message: ''
+        });
+      }
+    } catch (error) {
       toast({
-        title: 'Mensagem enviada com sucesso!',
-        description: 'Entraremos em contato em breve.',
+        title: 'Erro ao enviar mensagem',
+        description: error.response?.data?.message || 'Por favor, tente novamente mais tarde.',
+        variant: 'destructive',
         duration: 5000
       });
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        service: '',
-        message: ''
-      });
+    } finally {
       setIsSubmitting(false);
-    }, 1500);
+    }
   };
 
   const contactInfo = [
