@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowRight, CheckCircle, Zap, Target, TrendingUp } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { Card, CardContent } from '../components/ui/card';
-import { services, stats, portfolioProjects, testimonials } from '../mock/mockData';
+import { services } from '../mock/mockData';
+import { projectsApi, testimonialsApi, statsApi } from '../services/api';
 import * as Icons from 'lucide-react';
 
 const Home = () => {
