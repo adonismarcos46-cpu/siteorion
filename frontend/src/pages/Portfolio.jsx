@@ -142,8 +142,9 @@ const Portfolio = () => {
               </Card>
             ))}
           </div>
+          )}
 
-          {filteredProjects.length === 0 && (
+          {!loading && filteredProjects.length === 0 && (
             <div className="text-center py-16">
               <p className="text-xl text-gray-600">Nenhum projeto encontrado nesta categoria.</p>
             </div>
