@@ -65,15 +65,26 @@ const Services = () => {
       </section>
 
       {/* Services Grid */}
-      <section className="py-24 bg-white">
+      <section id="services-grid" className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {services.map((service) => {
+            {services.map((service, index) => {
               const IconComponent = Icons[service.icon];
+              // Assign IDs based on service type
+              let serviceId = '';
+              if (service.title.includes('Sites')) serviceId = 'web';
+              else if (service.title.includes('Mobile')) serviceId = 'mobile';
+              else if (service.title.includes('Landing')) serviceId = 'landing';
+              else if (service.title.includes('Redes')) serviceId = 'social';
+              else if (service.title.includes('Design')) serviceId = 'marketing';
+              else if (service.title.includes('Tráfego')) serviceId = 'traffic';
+              
               return (
                 <Card
+                  id={serviceId}
                   key={service.id}
-                  className="hover:shadow-2xl transition-all hover:-translate-y-2 cursor-pointer group"
+                  className="hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 cursor-pointer group"
+                  style={{ animationDelay: `${index * 100}ms` }}
                 >
                   <CardContent className="p-8">
                     <div className="w-16 h-16 bg-blue-100 rounded-xl flex items-center justify-center mb-6 group-hover:bg-blue-600 transition-colors">
