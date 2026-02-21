@@ -16,5 +16,20 @@ html {
 }
 
 .animate-fade-in {
-    animation: fade-in 0.8s ease-out;
+    animation: fade-in 0.8s ease-out forwards;
+    opacity: 0;
+}
+
+/* Pulse animation for loading states */
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+.animate-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
