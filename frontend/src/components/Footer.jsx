@@ -13,10 +13,10 @@ const Footer = () => {
       { label: 'Contato', path: '/contact' }
     ],
     services: [
-      { label: 'Desenvolvimento Web', path: '/services' },
-      { label: 'Aplicativos Mobile', path: '/services' },
-      { label: 'Marketing Digital', path: '/services' },
-      { label: 'Gestão de Redes', path: '/services' }
+      { label: 'Desenvolvimento Web', path: '/services#web' },
+      { label: 'Aplicativos Mobile', path: '/services#mobile' },
+      { label: 'Marketing Digital', path: '/services#marketing' },
+      { label: 'Gestão de Redes', path: '/services#social' }
     ]
   };
 
