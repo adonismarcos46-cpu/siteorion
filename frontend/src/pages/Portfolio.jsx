@@ -141,7 +141,7 @@ const Portfolio = () => {
                 </CardContent>
               </Card>
             ))}
-          </div>
+            </div>
           )}
 
           {!loading && filteredProjects.length === 0 && (
