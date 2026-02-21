@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#2563EB;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0EA5E9;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="100" height="100" rx="20" fill="url(#grad)"/>
+  <g fill="white">
+    <!-- Star icon representing Orion -->
+    <path d="M50 20 L55 35 L70 35 L58 45 L63 60 L50 50 L37 60 L42 45 L30 35 L45 35 Z" opacity="0.9"/>
+    <circle cx="35" cy="70" r="3" opacity="0.7"/>
+    <circle cx="65" cy="70" r="3" opacity="0.7"/>
+    <circle cx="50" cy="80" r="2" opacity="0.6"/>
+    <circle cx="40" cy="75" r="2" opacity="0.6"/>
+    <circle cx="60" cy="75" r="2" opacity="0.6"/>
+  </g>
+</svg>
