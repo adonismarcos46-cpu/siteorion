@@ -64,7 +64,7 @@ const Portfolio = () => {
                   <TabsTrigger
                     key={category.id}
                     value={category.value}
-                    className="px-4 py-2 text-sm font-medium transition-colors data-[state=active]:bg-blue-600 data-[state=active]:text-white"
+                    className="px-4 py-2 text-sm font-medium transition-all duration-300 data-[state=active]:bg-blue-600 data-[state=active]:text-white data-[state=active]:scale-105 hover:bg-gray-200"
                   >
                     {category.label}
                   </TabsTrigger>
