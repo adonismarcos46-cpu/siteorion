@@ -89,7 +89,7 @@ const Portfolio = () => {
             </div>
           ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredProjects.map((project, index) => (
+              {filteredProjects.map((project, index) => (
               <Card
                 key={project.id}
                 className="group overflow-hidden hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 cursor-pointer animate-fade-in"
