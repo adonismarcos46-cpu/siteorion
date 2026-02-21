@@ -163,10 +163,10 @@ async def seed_initial_data():
     # Seed Stats
     stats = {
         "id": "default",
-        "projectsCompleted": "150+",
-        "clientsSatisfied": "80+",
-        "yearsExperience": "5+",
-        "successRate": "98%"
+        "projectsCompleted": "100+",
+        "clientsSatisfied": "45+",
+        "yearsExperience": "3+",
+        "successRate": "93%"
     }
     
     await stats_collection.insert_one(stats)
