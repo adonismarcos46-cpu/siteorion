@@ -122,8 +122,8 @@ async def seed_initial_data():
         {
             "id": "1",
             "name": "Carlos Mendes",
-            "role": "CEO, TechStart Solutions",
-            "content": "A Orion Digital transformou nossa presença online. O novo site aumentou nossas conversões em 150% e a equipe foi extremamente profissional.",
+            "role": "Diretor, TechStart Solutions",
+            "content": "Trabalho sério e comprometido. O site ficou moderno e funcional, exatamente como precisávamos. A equipe foi atenciosa durante todo o processo.",
             "rating": 5,
             "avatar": "CM",
             "approved": True
@@ -131,8 +131,8 @@ async def seed_initial_data():
         {
             "id": "2",
             "name": "Marina Silva",
-            "role": "Diretora de Marketing, FitLife Academias",
-            "content": "Trabalho impecável na gestão das nossas redes sociais. Em 6 meses, triplicamos nosso engajamento e dobramos as matrículas.",
+            "role": "Proprietária, FitLife Academia",
+            "content": "Contrarei a Orion para gestão das redes sociais da academia. Em 4 meses já vi diferença no engajamento e nas consultas. Profissionais competentes!",
             "rating": 5,
             "avatar": "MS",
             "approved": True
@@ -140,17 +140,17 @@ async def seed_initial_data():
         {
             "id": "3",
             "name": "Roberto Almeida",
-            "role": "Fundador, GourmetExpress",
-            "content": "O aplicativo desenvolvido pela Orion superou nossas expectativas. Interface intuitiva e suporte sempre presente. Recomendo!",
-            "rating": 5,
+            "role": "Sócio, GourmetExpress",
+            "content": "Desenvolveram nosso app de delivery com qualidade. Alguns ajustes foram necessários mas o suporte foi rápido. No geral, estou satisfeito com o resultado.",
+            "rating": 4,
             "avatar": "RA",
             "approved": True
         },
         {
             "id": "4",
             "name": "Juliana Costa",
-            "role": "Gerente Comercial, Imóveis Premium",
-            "content": "A landing page criada teve uma taxa de conversão excepcional. O investimento se pagou na primeira semana. Profissionais de alto nível.",
+            "role": "Corretora, Imóveis JC",
+            "content": "A landing page teve boa taxa de conversão nas campanhas. O investimento valeu a pena e já estou planejando novos projetos com eles.",
             "rating": 5,
             "avatar": "JC",
             "approved": True
