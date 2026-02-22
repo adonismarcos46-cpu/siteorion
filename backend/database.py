@@ -25,7 +25,9 @@ async def seed_initial_data():
     # Check if data already exists
     project_count = await projects_collection.count_documents({})
     if project_count > 0:
-        print("Database already seeded, skipping...")
+        print("Database already seeded, skipping initial seed...")
+        # But always update stats and testimonials to ensure latest data
+        await update_stats_and_testimonials()
         return
     
     print("Seeding database with initial data...")
@@ -117,7 +119,32 @@ async def seed_initial_data():
     await projects_collection.insert_many(projects)
     print(f"✓ Inserted {len(projects)} projects")
     
-    # Seed Testimonials
+    # Update stats and testimonials
+    await update_stats_and_testimonials()
+    
+    print("Database seeding completed successfully!")
+
+
+async def update_stats_and_testimonials():
+    """Always update stats and testimonials to ensure latest data"""
+    
+    # Update/Insert Stats
+    stats = {
+        "id": "default",
+        "projectsCompleted": "100+",
+        "clientsSatisfied": "45+",
+        "yearsExperience": "3+",
+        "successRate": "93%"
+    }
+    
+    await stats_collection.update_one(
+        {"id": "default"},
+        {"$set": stats},
+        upsert=True
+    )
+    print("✓ Stats updated to latest values")
+    
+    # Update Testimonials
     testimonials = [
         {
             "id": "1",
@@ -157,19 +184,10 @@ async def seed_initial_data():
         }
     ]
     
-    await testimonials_collection.insert_many(testimonials)
-    print(f"✓ Inserted {len(testimonials)} testimonials")
-    
-    # Seed Stats
-    stats = {
-        "id": "default",
-        "projectsCompleted": "100+",
-        "clientsSatisfied": "45+",
-        "yearsExperience": "3+",
-        "successRate": "93%"
-    }
-    
-    await stats_collection.insert_one(stats)
-    print("✓ Inserted stats")
-    
-    print("Database seeding completed successfully!")
+    for testimonial in testimonials:
+        await testimonials_collection.update_one(
+            {"id": testimonial["id"]},
+            {"$set": testimonial},
+            upsert=True
+        )
+    print("✓ Testimonials updated to latest versions")
