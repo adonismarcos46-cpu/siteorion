@@ -70,7 +70,6 @@ module.exports = {
                                 to: {
                                         height: '0'
                                 }
-                        }
                         },
                         spotlight: {
                                 "0%": {
