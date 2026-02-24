@@ -3,6 +3,8 @@ import { ArrowRight, Target, Users, Zap, Award, CheckCircle } from 'lucide-react
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../components/ui/button';
 import { Card, CardContent } from '../components/ui/card';
+import { SplineScene } from '../components/ui/spline-scene';
+import { Spotlight } from '../components/ui/spotlight';
 
 const About = () => {
   const navigate = useNavigate();
