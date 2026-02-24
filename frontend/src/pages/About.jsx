@@ -96,6 +96,53 @@ const About = () => {
         </div>
       </section>
 
+      {/* Interactive 3D Section */}
+      <section className="py-24 bg-gray-900">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <Card className="w-full h-[600px] bg-black/[0.96] relative overflow-hidden border-blue-500/20">
+            <Spotlight
+              className="-top-40 left-0 md:left-60 md:-top-20"
+              fill="white"
+            />
+            
+            <div className="flex flex-col md:flex-row h-full">
+              {/* Left content */}
+              <div className="flex-1 p-8 md:p-12 relative z-10 flex flex-col justify-center">
+                <h2 className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 mb-6">
+                  Tecnologia Interativa
+                </h2>
+                <p className="text-lg text-neutral-300 max-w-lg mb-8">
+                  Criamos experiências digitais imersivas que capturam atenção e elevam seu design. 
+                  Explore o futuro do desenvolvimento web com animações 3D e interatividade avançada.
+                </p>
+                <div className="space-y-4">
+                  <div className="flex items-center space-x-3">
+                    <CheckCircle className="w-6 h-6 text-blue-500 flex-shrink-0" />
+                    <span className="text-neutral-300">Animações 3D Personalizadas</span>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <CheckCircle className="w-6 h-6 text-blue-500 flex-shrink-0" />
+                    <span className="text-neutral-300">Experiências Imersivas</span>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <CheckCircle className="w-6 h-6 text-blue-500 flex-shrink-0" />
+                    <span className="text-neutral-300">Design Interativo</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Right content - 3D Scene */}
+              <div className="flex-1 relative min-h-[300px] md:min-h-0">
+                <SplineScene 
+                  scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
+                  className="w-full h-full"
+                />
+              </div>
+            </div>
+          </Card>
+        </div>
+      </section>
+
       {/* Values Section */}
       <section className="py-24 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
