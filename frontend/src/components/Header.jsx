@@ -42,13 +42,21 @@ const Header = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2 group">
+          <Link to="/" className="flex items-center space-x-3 group">
             <div className="relative">
-              <Sparkles className="w-8 h-8 text-blue-600 transition-transform group-hover:rotate-12" />
+              <div className="absolute inset-0 bg-blue-600/20 rounded-lg blur-lg group-hover:bg-blue-600/30 transition-all"></div>
+              <div className="relative w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg flex items-center justify-center">
+                <Sparkles className="w-6 h-6 text-white transition-transform group-hover:rotate-12" />
+              </div>
             </div>
-            <span className="text-2xl font-bold text-gray-900">
-              Orion <span className="text-blue-600">Digital</span>
-            </span>
+            <div className="flex flex-col">
+              <span className="text-xl font-bold text-gray-900 leading-tight">
+                Orion
+              </span>
+              <span className="text-xs font-medium text-blue-600 leading-tight">
+                Digital
+              </span>
+            </div>
           </Link>
 
           {/* Desktop Navigation */}
