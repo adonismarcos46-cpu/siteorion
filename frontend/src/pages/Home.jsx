@@ -65,7 +65,7 @@ const Home = () => {
         <div
           className="absolute inset-0 z-0"
           style={{
-            backgroundImage: 'url(https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2Nzh8MHwxfHNlYXJjaHwzfHx3b3Jrc3BhY2V8ZW58MHx8fHwxNzcxNTM3NzMxfDA&ixlib=rb-4.1.0&q=85)',
+            backgroundImage: 'url(https://customer-assets.emergentagent.com/job_digital-studio-53/artifacts/0e9zrcbi_ChatGPT%20Image%2026%20de%20fev.%20de%202026%2C%2011_17_57.png)',
             backgroundSize: 'cover',
             backgroundPosition: 'center'
           }}
