@@ -18,25 +18,22 @@ const Header = () => {
 
   const navItems = [
     { label: 'Início', path: '/' },
-    { label: 'Sobre', path: '/about' },
-    { label: 'Portfólio', path: '/portfolio' },
-    { label: 'Serviços', path: '/services' },
-    { label: 'Contato', path: '/contact' }
+    { label: 'Método', path: '/#metodo' },
+    { label: 'Soluções', path: '/#solucoes' },
+    { label: 'Resultados', path: '/#resultados' }
   ];
 
-  const scrollToContact = () => {
-    if (location.pathname !== '/') {
-      window.location.href = '/#contact';
-    } else {
-      document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
-    }
-    setIsMobileMenuOpen(false);
+  const whatsappNumber = "5581999464238";
+  const whatsappMessage = encodeURIComponent("Olá! Gostaria de conhecer as soluções Orion Digital.");
+
+  const openWhatsApp = () => {
+    window.open(`https://wa.me/${whatsappNumber}?text=${whatsappMessage}`, '_blank');
   };
 
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-white/95 backdrop-blur-md shadow-sm' : 'bg-transparent'
+        isScrolled ? 'bg-gray-950/95 backdrop-blur-md border-b border-gray-800' : 'bg-transparent'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -65,10 +62,10 @@ const Header = () => {
               <Link
                 key={item.path}
                 to={item.path}
-                className={`text-sm font-medium transition-colors hover:text-blue-600 ${
+                className={`text-sm font-medium transition-colors hover:text-blue-400 ${
                   location.pathname === item.path
-                    ? 'text-blue-600'
-                    : 'text-gray-700'
+                    ? 'text-blue-400'
+                    : 'text-gray-300'
                 }`}
               >
                 {item.label}
@@ -79,16 +76,16 @@ const Header = () => {
           {/* CTA Button */}
           <div className="hidden md:block">
             <Button
-              onClick={scrollToContact}
+              onClick={openWhatsApp}
               className="bg-blue-600 hover:bg-blue-700 text-white transition-colors"
             >
-              Solicitar Orçamento
+              Falar com Especialista
             </Button>
           </div>
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden p-2 text-gray-700 hover:text-blue-600 transition-colors"
+            className="md:hidden p-2 text-gray-300 hover:text-blue-400 transition-colors"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
             {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -98,7 +95,7 @@ const Header = () => {
 
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <div className="md:hidden bg-white border-t border-gray-100 shadow-lg">
+        <div className="md:hidden bg-gray-950 border-t border-gray-800 shadow-lg">
           <div className="px-4 py-6 space-y-4">
             {navItems.map((item) => (
               <Link
@@ -106,8 +103,8 @@ const Header = () => {
                 to={item.path}
                 className={`block text-base font-medium transition-colors ${
                   location.pathname === item.path
-                    ? 'text-blue-600'
-                    : 'text-gray-700 hover:text-blue-600'
+                    ? 'text-blue-400'
+                    : 'text-gray-300 hover:text-blue-400'
                 }`}
                 onClick={() => setIsMobileMenuOpen(false)}
               >
@@ -115,10 +112,13 @@ const Header = () => {
               </Link>
             ))}
             <Button
-              onClick={scrollToContact}
+              onClick={() => {
+                openWhatsApp();
+                setIsMobileMenuOpen(false);
+              }}
               className="w-full bg-blue-600 hover:bg-blue-700 text-white"
             >
-              Solicitar Orçamento
+              Falar com Especialista
             </Button>
           </div>
         </div>
