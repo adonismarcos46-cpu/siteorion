@@ -165,8 +165,15 @@ const HomeComplete = () => {
               </div>
             </div>
 
-            {/* Right Content - Combined Mockup */}
+            {/* Right Content - Combined Mockup with 3D Animation */}
             <div className="relative">
+              {/* Animated 3D-like gradient background */}
+              <div className="absolute inset-0 opacity-40 animate-pulse">
+                <div className="absolute top-0 left-0 w-72 h-72 bg-blue-500 rounded-full filter blur-3xl"></div>
+                <div className="absolute bottom-0 right-0 w-96 h-96 bg-cyan-500 rounded-full filter blur-3xl"></div>
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-purple-500 rounded-full filter blur-3xl"></div>
+              </div>
+              
               <div className="absolute inset-0 bg-gradient-to-r from-blue-600/20 to-cyan-600/20 blur-3xl rounded-full"></div>
               
               {/* Main Dashboard Card */}

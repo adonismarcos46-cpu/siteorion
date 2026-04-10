@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Menu, X, Sparkles } from 'lucide-react';
 import { Button } from './ui/button';
 
@@ -7,6 +7,7 @@ const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -17,18 +18,39 @@ const Header = () => {
   }, []);
 
   const navItems = [
-    { label: 'Início', path: '/' },
-    { label: 'Orionis IA', path: '/orionis' },
-    { label: 'Portfólio', path: '/portfolio' },
-    { label: 'Soluções', path: '/#solucoes' },
-    { label: 'Contato', path: '/contact' }
+    { label: 'Início', path: '/', hash: null },
+    { label: 'Orionis IA', path: '/orionis', hash: null },
+    { label: 'Portfólio', path: '/portfolio', hash: null },
+    { label: 'Soluções', path: '/', hash: 'solucoes' },
+    { label: 'Contato', path: '/contact', hash: null }
   ];
 
   const whatsappNumber = "5581999464238";
-  const whatsappMessage = encodeURIComponent("Olá! Gostaria de conhecer as soluções Orion Digital.");
+  const whatsappMessage = encodeURIComponent("Quero estruturar meu sistema digital com a Orion.");
 
   const openWhatsApp = () => {
     window.open(`https://wa.me/${whatsappNumber}?text=${whatsappMessage}`, '_blank');
+  };
+
+  const handleNavClick = (e, item) => {
+    if (item.hash) {
+      e.preventDefault();
+      if (location.pathname !== item.path) {
+        navigate(item.path);
+        setTimeout(() => {
+          const element = document.getElementById(item.hash);
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }, 100);
+      } else {
+        const element = document.getElementById(item.hash);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
+      setIsMobileMenuOpen(false);
+    }
   };
 
   return (
@@ -61,8 +83,9 @@ const Header = () => {
           <nav className="hidden md:flex items-center space-x-8">
             {navItems.map((item) => (
               <Link
-                key={item.path}
-                to={item.path}
+                key={item.label}
+                to={item.hash ? `${item.path}#${item.hash}` : item.path}
+                onClick={(e) => handleNavClick(e, item)}
                 className={`text-sm font-medium transition-colors hover:text-blue-400 ${
                   location.pathname === item.path
                     ? 'text-blue-400'
@@ -100,14 +123,14 @@ const Header = () => {
           <div className="px-4 py-6 space-y-4">
             {navItems.map((item) => (
               <Link
-                key={item.path}
-                to={item.path}
+                key={item.label}
+                to={item.hash ? `${item.path}#${item.hash}` : item.path}
+                onClick={(e) => handleNavClick(e, item)}
                 className={`block text-base font-medium transition-colors ${
                   location.pathname === item.path
                     ? 'text-blue-400'
                     : 'text-gray-300 hover:text-blue-400'
                 }`}
-                onClick={() => setIsMobileMenuOpen(false)}
               >
                 {item.label}
               </Link>

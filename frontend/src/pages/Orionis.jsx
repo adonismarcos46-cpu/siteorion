@@ -19,6 +19,60 @@ const Orionis = () => {
     { role: 'assistant', content: 'Olá! Sou a Orionis. Como posso ajudar seu negócio a crescer hoje?' }
   ]);
   const [inputMessage, setInputMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [sessionId, setSessionId] = useState(null);
+
+  const API_URL = process.env.REACT_APP_BACKEND_URL;
+
+  const handleSendMessage = async () => {
+    if (!inputMessage.trim() || isLoading) return;
+
+    const userMessage = inputMessage.trim();
+    setInputMessage('');
+    
+    // Add user message to chat
+    setChatMessages(prev => [...prev, { role: 'user', content: userMessage }]);
+    setIsLoading(true);
+
+    try {
+      const response = await fetch(`${API_URL}/api/orionis/chat`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          message: userMessage,
+          session_id: sessionId
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Erro ao enviar mensagem');
+      }
+
+      const data = await response.json();
+      
+      // Update session ID if new
+      if (data.session_id && !sessionId) {
+        setSessionId(data.session_id);
+      }
+      
+      // Add AI response to chat
+      setChatMessages(prev => [...prev, { 
+        role: 'assistant', 
+        content: data.response 
+      }]);
+      
+    } catch (error) {
+      console.error('Erro no chat:', error);
+      setChatMessages(prev => [...prev, { 
+        role: 'assistant', 
+        content: 'Desculpe, ocorreu um erro. Por favor, tente novamente.' 
+      }]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const features = [
     {
@@ -78,20 +132,17 @@ const Orionis = () => {
     { title: "Estrategista", description: "Sugere ações baseadas em padrões e resultados" }
   ];
 
-  const handleSendMessage = () => {
-    if (!inputMessage.trim()) return;
-
-    setChatMessages([...chatMessages, 
-      { role: 'user', content: inputMessage },
-      { role: 'assistant', content: 'Entendo sua necessidade. A Orionis pode automatizar esse processo completamente. Gostaria de agendar uma demonstração personalizada?' }
-    ]);
-    setInputMessage('');
-  };
-
   return (
     <div className="min-h-screen bg-gray-950 pt-20">
       {/* Hero Section */}
       <section className="relative py-24 overflow-hidden">
+        {/* Animated 3D-like gradient spheres */}
+        <div className="absolute inset-0 opacity-30">
+          <div className="absolute top-20 left-20 w-96 h-96 bg-purple-600 rounded-full filter blur-3xl animate-pulse"></div>
+          <div className="absolute top-40 right-40 w-80 h-80 bg-blue-600 rounded-full filter blur-3xl animate-pulse" style={{animationDelay: '0.5s'}}></div>
+          <div className="absolute bottom-20 left-1/3 w-72 h-72 bg-cyan-600 rounded-full filter blur-3xl animate-pulse" style={{animationDelay: '1s'}}></div>
+        </div>
+        
         <div className="absolute inset-0 bg-gradient-to-br from-purple-600/20 via-blue-600/20 to-cyan-600/20"></div>
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiMyNTYzRUIiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDE2YzAtMS4xLS45LTItMi0ycy0yIC45LTIgMiAuOSAyIDIgMiAyLS45IDItMnoiLz48L2c+PC9nPjwvc3ZnPg==')] opacity-30"></div>
 
@@ -375,6 +426,19 @@ const Orionis = () => {
                   </div>
                 </div>
               ))}
+              
+              {/* Loading indicator */}
+              {isLoading && (
+                <div className="flex justify-start">
+                  <div className="bg-gray-800 p-4 rounded-2xl">
+                    <div className="flex space-x-2">
+                      <div className="w-2 h-2 bg-purple-500 rounded-full animate-bounce"></div>
+                      <div className="w-2 h-2 bg-purple-500 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                      <div className="w-2 h-2 bg-purple-500 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
 
             <div className="p-6 border-t border-gray-800">
@@ -382,13 +446,15 @@ const Orionis = () => {
                 <Input
                   value={inputMessage}
                   onChange={(e) => setInputMessage(e.target.value)}
-                  onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
-                  placeholder="Digite sua mensagem..."
-                  className="flex-1 bg-gray-800 border-gray-700 text-white"
+                  onKeyPress={(e) => e.key === 'Enter' && !isLoading && handleSendMessage()}
+                  placeholder={isLoading ? "Orionis está digitando..." : "Digite sua mensagem..."}
+                  disabled={isLoading}
+                  className="flex-1 bg-gray-800 border-gray-700 text-white disabled:opacity-50"
                 />
                 <Button
                   onClick={handleSendMessage}
-                  className="bg-purple-600 hover:bg-purple-700"
+                  disabled={isLoading || !inputMessage.trim()}
+                  className="bg-purple-600 hover:bg-purple-700 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <Send className="w-5 h-5" />
                 </Button>

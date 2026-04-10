@@ -4,7 +4,8 @@ from models import (
     Project, ProjectCreate,
     Testimonial, TestimonialCreate,
     Contact, ContactCreate,
-    Stats, APIResponse
+    Stats, APIResponse,
+    ChatRequest, ChatResponse, ChatMessage
 )
 from database import (
     projects_collection,
@@ -14,6 +15,12 @@ from database import (
 )
 import logging
 from datetime import datetime
+from dotenv import load_dotenv
+import os
+from uuid import uuid4
+
+# Load environment variables
+load_dotenv()
 
 logger = logging.getLogger(__name__)
 
@@ -164,3 +171,62 @@ async def get_stats():
 async def health_check():
     """Health check endpoint"""
     return {"status": "healthy", "timestamp": datetime.utcnow().isoformat()}
+
+
+# Orionis AI Chat Endpoint
+@router.post("/orionis/chat", response_model=ChatResponse)
+async def orionis_chat(chat_request: ChatRequest):
+    """Chat with Orionis AI - Business OS Assistant"""
+    try:
+        from emergentintegrations.llm.chat import LlmChat, UserMessage
+        
+        # Generate or use existing session ID
+        session_id = chat_request.session_id or str(uuid4())
+        
+        # Get API key from environment
+        api_key = os.getenv("EMERGENT_LLM_KEY")
+        if not api_key:
+            raise HTTPException(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                detail="API key not configured"
+            )
+        
+        # System message for Orionis
+        system_message = """Você é Orionis, uma IA especializada em Business OS e infraestrutura de crescimento digital.
+
+Seu papel é:
+- Ajudar empresas a estruturarem seus sistemas digitais para crescimento previsível
+- Explicar como integração de SEO, Sites, Landing Pages, CRM, Automação e WhatsApp AI criam resultados
+- Qualificar leads fazendo perguntas estratégicas sobre os desafios do negócio
+- Ser consultivo, direto e focado em ROI e resultados mensuráveis
+- Usar tom profissional mas acessível, evitando jargões desnecessários
+
+Foco principal: transformar operações improvisadas em sistemas inteligentes e escaláveis."""
+        
+        # Initialize LLM Chat with Gemini 2.5 Flash (most economical)
+        chat = LlmChat(
+            api_key=api_key,
+            session_id=session_id,
+            system_message=system_message
+        ).with_model("gemini", "gemini-2.5-flash")
+        
+        # Create user message
+        user_message = UserMessage(text=chat_request.message)
+        
+        # Get AI response
+        ai_response = await chat.send_message(user_message)
+        
+        logger.info(f"Orionis chat - Session: {session_id}, Message processed successfully")
+        
+        return ChatResponse(
+            success=True,
+            response=ai_response,
+            session_id=session_id
+        )
+        
+    except Exception as e:
+        logger.error(f"Error in Orionis chat: {str(e)}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Erro ao processar mensagem: {str(e)}"
+        )

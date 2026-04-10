@@ -1,0 +1,4 @@
+emergentintegrations==0.1.0
+fastapi==0.110.1
+pydantic==2.12.5
+pydantic_core==2.41.5

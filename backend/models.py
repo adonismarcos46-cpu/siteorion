@@ -87,3 +87,21 @@ class APIResponse(BaseModel):
     success: bool
     message: str
     data: Optional[dict] = None
+
+
+# Orionis Chat Models
+class ChatMessage(BaseModel):
+    role: str  # 'user' or 'assistant'
+    content: str
+    timestamp: datetime = Field(default_factory=datetime.utcnow)
+
+
+class ChatRequest(BaseModel):
+    message: str
+    session_id: Optional[str] = None
+
+
+class ChatResponse(BaseModel):
+    success: bool
+    response: str
+    session_id: str
