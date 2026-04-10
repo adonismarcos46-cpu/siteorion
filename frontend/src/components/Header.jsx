@@ -18,10 +18,10 @@ const Header = () => {
 
   const navItems = [
     { label: 'Início', path: '/' },
+    { label: 'Orionis IA', path: '/orionis' },
     { label: 'Portfólio', path: '/portfolio' },
-    { label: 'Método', path: '/#metodo' },
     { label: 'Soluções', path: '/#solucoes' },
-    { label: 'Resultados', path: '/#resultados' }
+    { label: 'Contato', path: '/contact' }
   ];
 
   const whatsappNumber = "5581999464238";
