@@ -377,6 +377,258 @@ const HomeComplete = () => {
         </div>
       </section>
 
+      {/* ORIONIS AI - BUSINESS OS */}
+      <section className="relative py-32 bg-gradient-to-br from-purple-900/30 via-gray-950 to-blue-900/30 overflow-hidden">
+        {/* 3D Animated Background Elements */}
+        <div className="absolute inset-0 overflow-hidden">
+          {/* Floating 3D Spheres */}
+          <div className="absolute top-20 left-10 w-64 h-64 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full blur-3xl opacity-20 animate-[float_6s_ease-in-out_infinite]"></div>
+          <div className="absolute top-40 right-20 w-96 h-96 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-full blur-3xl opacity-20 animate-[float_8s_ease-in-out_infinite]" style={{animationDelay: '1s'}}></div>
+          <div className="absolute bottom-20 left-1/3 w-80 h-80 bg-gradient-to-br from-pink-500 to-purple-500 rounded-full blur-3xl opacity-20 animate-[float_7s_ease-in-out_infinite]" style={{animationDelay: '2s'}}></div>
+          
+          {/* 3D Grid Pattern */}
+          <div className="absolute inset-0 opacity-10">
+            <div className="absolute inset-0" style={{
+              backgroundImage: 'linear-gradient(rgba(99, 102, 241, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(99, 102, 241, 0.1) 1px, transparent 1px)',
+              backgroundSize: '50px 50px',
+              transform: 'perspective(500px) rotateX(60deg)',
+              transformOrigin: 'center center'
+            }}></div>
+          </div>
+        </div>
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <Badge className="mb-6 bg-gradient-to-r from-purple-600 to-pink-600 text-white border-0 px-6 py-3 text-base animate-pulse">
+              <Bot className="w-5 h-5 mr-2 inline" />
+              Powered by Artificial Intelligence
+            </Badge>
+            
+            <h2 className="text-5xl md:text-7xl font-bold mb-8">
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 animate-gradient">
+                Orionis
+              </span>
+              <br />
+              <span className="text-white">Seu Business OS com IA</span>
+            </h2>
+            
+            <p className="text-2xl text-gray-300 max-w-4xl mx-auto mb-12 leading-relaxed">
+              Mais que ferramentas. Um sistema operacional inteligente que gerencia, 
+              automatiza e escala sua operação comercial 24/7.
+            </p>
+          </div>
+
+          {/* 3D Floating Cards */}
+          <div className="grid md:grid-cols-3 gap-8 mb-16">
+            {[
+              {
+                icon: MessageCircle,
+                title: "Chat IA 24/7",
+                description: "Atendimento inteligente que qualifica leads, responde dúvidas e agenda reuniões automaticamente.",
+                gradient: "from-blue-500 to-cyan-500",
+                delay: "0s"
+              },
+              {
+                icon: Brain,
+                title: "Automação Inteligente",
+                description: "Fluxos de trabalho que aprendem com seu negócio e otimizam processos continuamente.",
+                gradient: "from-purple-500 to-pink-500",
+                delay: "0.2s"
+              },
+              {
+                icon: BarChart3,
+                title: "Analytics Preditivo",
+                description: "IA analisa padrões e prevê oportunidades antes da concorrência.",
+                gradient: "from-pink-500 to-orange-500",
+                delay: "0.4s"
+              }
+            ].map((feature, idx) => {
+              const IconComponent = feature.icon;
+              return (
+                <Card 
+                  key={idx}
+                  className="relative bg-gray-900/50 border-gray-800 backdrop-blur-sm hover:scale-105 transition-all duration-500 group overflow-hidden"
+                  style={{
+                    animation: `float 4s ease-in-out infinite`,
+                    animationDelay: feature.delay,
+                    transform: 'perspective(1000px) rotateY(0deg)',
+                    transition: 'transform 0.6s ease-out'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'perspective(1000px) rotateY(5deg) scale(1.05)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'perspective(1000px) rotateY(0deg) scale(1)';
+                  }}
+                >
+                  {/* Gradient Border Animation */}
+                  <div className={`absolute inset-0 bg-gradient-to-r ${feature.gradient} opacity-0 group-hover:opacity-20 blur-xl transition-opacity duration-500`}></div>
+                  
+                  <CardContent className="relative p-8">
+                    <div className={`w-16 h-16 bg-gradient-to-br ${feature.gradient} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500`}>
+                      <IconComponent className="w-8 h-8 text-white" />
+                    </div>
+                    
+                    <h3 className="text-2xl font-bold text-white mb-4">
+                      {feature.title}
+                    </h3>
+                    
+                    <p className="text-gray-400 leading-relaxed">
+                      {feature.description}
+                    </p>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
+
+          {/* Interactive Demo Section */}
+          <div className="relative">
+            <Card className="bg-gradient-to-br from-gray-900/90 to-gray-950/90 border-purple-500/30 backdrop-blur-xl overflow-hidden">
+              {/* Animated Background */}
+              <div className="absolute inset-0 opacity-30">
+                <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-purple-600 to-pink-600 rounded-full blur-3xl animate-pulse"></div>
+                <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-br from-blue-600 to-cyan-600 rounded-full blur-3xl animate-pulse" style={{animationDelay: '1s'}}></div>
+              </div>
+
+              <CardContent className="relative p-12">
+                <div className="grid lg:grid-cols-2 gap-12 items-center">
+                  <div>
+                    <h3 className="text-4xl font-bold text-white mb-6">
+                      Converse com a Orionis Agora
+                    </h3>
+                    <p className="text-xl text-gray-300 mb-8 leading-relaxed">
+                      Nossa IA está online 24/7 pronta para entender seu desafio e 
+                      apresentar soluções personalizadas para seu negócio.
+                    </p>
+                    
+                    <ul className="space-y-4 mb-8">
+                      {[
+                        "Qualificação inteligente de leads",
+                        "Respostas contextuais e estratégicas",
+                        "Integração com todo seu ecossistema",
+                        "Aprendizado contínuo do seu negócio"
+                      ].map((item, idx) => (
+                        <li key={idx} className="flex items-center space-x-3">
+                          <div className="w-6 h-6 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center flex-shrink-0">
+                            <CheckCircle className="w-4 h-4 text-white" />
+                          </div>
+                          <span className="text-gray-300">{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+
+                    <div className="flex flex-col sm:flex-row gap-4">
+                      <Button
+                        size="lg"
+                        onClick={() => navigate('/orionis')}
+                        className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-8 py-6 text-lg font-bold shadow-lg shadow-purple-600/50 group"
+                      >
+                        <MessageCircle className="mr-2 w-5 h-5 group-hover:animate-bounce" />
+                        Conversar com Orionis
+                        <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                      </Button>
+                      
+                      <Button
+                        size="lg"
+                        variant="outline"
+                        onClick={() => navigate('/orionis')}
+                        className="border-2 border-purple-500 text-purple-400 hover:bg-purple-500/10 px-8 py-6 text-lg font-bold"
+                      >
+                        Ver Demonstração
+                      </Button>
+                    </div>
+                  </div>
+
+                  {/* 3D Animated Chat Preview */}
+                  <div className="relative">
+                    <div className="relative transform hover:scale-105 transition-transform duration-500">
+                      {/* Floating Chat Bubbles with 3D effect */}
+                      <div className="space-y-4">
+                        <div className="bg-gray-800/80 backdrop-blur-sm p-4 rounded-2xl rounded-bl-sm border border-gray-700 animate-[slideInLeft_0.5s_ease-out] shadow-lg">
+                          <p className="text-gray-300 text-sm">Como a Orionis pode ajudar minha empresa?</p>
+                        </div>
+                        
+                        <div className="bg-gradient-to-r from-purple-600 to-pink-600 p-4 rounded-2xl rounded-br-sm ml-8 animate-[slideInRight_0.7s_ease-out] shadow-xl">
+                          <p className="text-white text-sm font-medium">
+                            Olá! Vou entender seu desafio e estruturar um sistema completo de crescimento. 
+                            Qual é o principal gargalo do seu negócio hoje? 🚀
+                          </p>
+                        </div>
+                        
+                        <div className="bg-gray-800/80 backdrop-blur-sm p-4 rounded-2xl rounded-bl-sm border border-gray-700 animate-[slideInLeft_0.9s_ease-out] shadow-lg">
+                          <p className="text-gray-300 text-sm">Preciso automatizar atendimento e vendas</p>
+                        </div>
+                        
+                        <div className="bg-gradient-to-r from-purple-600 to-pink-600 p-4 rounded-2xl rounded-br-sm ml-8 animate-[slideInRight_1.1s_ease-out] shadow-xl">
+                          <p className="text-white text-sm font-medium">
+                            Perfeito! Posso estruturar um sistema com WhatsApp IA + CRM + Automação. 
+                            Quantos leads você recebe por mês? 📊
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Typing Indicator */}
+                      <div className="mt-4 bg-gray-800/60 backdrop-blur-sm p-3 rounded-2xl rounded-br-sm ml-8 inline-flex items-center space-x-2 border border-purple-500/30 animate-pulse">
+                        <div className="w-2 h-2 bg-purple-500 rounded-full animate-bounce"></div>
+                        <div className="w-2 h-2 bg-purple-500 rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
+                        <div className="w-2 h-2 bg-purple-500 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
+                        <span className="text-gray-400 text-xs ml-2">Orionis está analisando...</span>
+                      </div>
+                    </div>
+
+                    {/* 3D Orbiting Elements */}
+                    <div className="absolute -right-4 -top-4 w-20 h-20 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-full blur-xl opacity-60 animate-[spin_10s_linear_infinite]"></div>
+                    <div className="absolute -left-4 -bottom-4 w-16 h-16 bg-gradient-to-br from-pink-500 to-purple-500 rounded-full blur-xl opacity-60 animate-[spin_8s_linear_infinite_reverse]"></div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+
+        {/* Add custom animations to index.css */}
+        <style jsx>{`
+          @keyframes float {
+            0%, 100% { transform: translateY(0px) translateX(0px); }
+            25% { transform: translateY(-20px) translateX(10px); }
+            50% { transform: translateY(0px) translateX(-10px); }
+            75% { transform: translateY(20px) translateX(5px); }
+          }
+          
+          @keyframes slideInLeft {
+            from {
+              opacity: 0;
+              transform: translateX(-50px);
+            }
+            to {
+              opacity: 1;
+              transform: translateX(0);
+            }
+          }
+          
+          @keyframes slideInRight {
+            from {
+              opacity: 0;
+              transform: translateX(50px);
+            }
+            to {
+              opacity: 1;
+              transform: translateX(0);
+            }
+          }
+          
+          @keyframes gradient {
+            0%, 100% {
+              background-position: 0% 50%;
+            }
+            50% {
+              background-position: 100% 50%;
+            }
+          }
+        `}</style>
+      </section>
+
       {/* ORION ACADEMY */}
       <section className="py-24 bg-gray-950 border-y border-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
