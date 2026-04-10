@@ -18,6 +18,7 @@ const Contact = () => {
     message: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitSuccess, setSubmitSuccess] = useState(false);
 
   const handleChange = (e) => {
     setFormData({
@@ -29,32 +30,39 @@ const Contact = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setSubmitSuccess(false);
 
     try {
       const response = await contactApi.submit(formData);
       
       if (response.success) {
+        setSubmitSuccess(true);
         toast({
-          title: 'Mensagem enviada com sucesso!',
-          description: response.message || 'Entraremos em contato em breve.',
-          duration: 5000
+          title: '✅ Mensagem enviada com sucesso!',
+          description: 'Obrigado pelo contato! Responderemos em até 24 horas.',
+          duration: 6000,
+          className: 'bg-green-50 border-green-500'
         });
         
-        // Reset form
-        setFormData({
-          name: '',
-          email: '',
-          phone: '',
-          service: '',
-          message: ''
-        });
+        // Reset form after delay
+        setTimeout(() => {
+          setFormData({
+            name: '',
+            email: '',
+            phone: '',
+            service: '',
+            message: ''
+          });
+          setSubmitSuccess(false);
+        }, 2000);
       }
     } catch (error) {
+      console.error('Erro ao enviar:', error);
       toast({
-        title: 'Erro ao enviar mensagem',
-        description: error.response?.data?.message || 'Por favor, tente novamente mais tarde.',
+        title: '❌ Erro ao enviar mensagem',
+        description: 'Por favor, tente novamente ou entre em contato pelo WhatsApp.',
         variant: 'destructive',
-        duration: 5000
+        duration: 6000
       });
     } finally {
       setIsSubmitting(false);
@@ -238,10 +246,22 @@ const Contact = () => {
                     <Button
                       type="submit"
                       disabled={isSubmitting}
-                      className="w-full bg-blue-600 hover:bg-blue-700 text-white py-6 text-lg"
+                      className={`w-full py-6 text-lg font-bold transition-all ${
+                        submitSuccess 
+                          ? 'bg-green-600 hover:bg-green-700' 
+                          : 'bg-blue-600 hover:bg-blue-700'
+                      } text-white`}
                     >
                       {isSubmitting ? (
-                        'Enviando...'
+                        <div className="flex items-center justify-center">
+                          <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
+                          Enviando...
+                        </div>
+                      ) : submitSuccess ? (
+                        <>
+                          <CheckCircle className="mr-2 w-5 h-5" />
+                          Mensagem Enviada!
+                        </>
                       ) : (
                         <>
                           Enviar Mensagem
@@ -249,6 +269,17 @@ const Contact = () => {
                         </>
                       )}
                     </Button>
+                    
+                    {submitSuccess && (
+                      <div className="mt-4 p-4 bg-green-50 border border-green-500 rounded-lg text-center">
+                        <p className="text-green-700 font-semibold">
+                          ✅ Sua mensagem foi enviada com sucesso!
+                        </p>
+                        <p className="text-green-600 text-sm mt-1">
+                          Responderemos em até 24 horas úteis.
+                        </p>
+                      </div>
+                    )}
                   </form>
                 </CardContent>
               </Card>
