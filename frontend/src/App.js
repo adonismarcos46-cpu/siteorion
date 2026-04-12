@@ -10,6 +10,7 @@ import Portfolio from "./pages/Portfolio";
 import PortfolioDetail from "./pages/PortfolioDetail";
 import Services from "./pages/Services";
 import Contact from "./pages/Contact";
+import Admin from "./pages/Admin";
 import { Toaster } from "./components/ui/toaster";
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
           <Route path="/portfolio/:id" element={<PortfolioDetail />} />
           <Route path="/services" element={<Services />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/admin" element={<Admin />} />
         </Routes>
         <Footer />
         <Toaster />

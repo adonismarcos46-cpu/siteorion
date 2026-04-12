@@ -173,6 +173,54 @@ async def health_check():
     return {"status": "healthy", "timestamp": datetime.utcnow().isoformat()}
 
 
+# Admin - Get all contacts
+@router.get("/contacts", response_model=dict)
+async def get_all_contacts():
+    """Get all contact messages for admin"""
+    try:
+        contacts = await contacts_collection.find({}, {"_id": 0}).sort("createdAt", -1).to_list(length=None)
+        return {
+            "success": True,
+            "data": contacts
+        }
+    except Exception as e:
+        logger.error(f"Error fetching contacts: {str(e)}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Failed to fetch contacts"
+        )
+
+
+# Admin - Mark contact as read
+@router.patch("/contacts/{contact_id}", response_model=dict)
+async def update_contact_status(contact_id: str):
+    """Mark contact as read"""
+    try:
+        result = await contacts_collection.update_one(
+            {"id": contact_id},
+            {"$set": {"status": "read"}}
+        )
+        
+        if result.matched_count == 0:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Contact not found"
+            )
+        
+        return {
+            "success": True,
+            "message": "Contact marked as read"
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Error updating contact: {str(e)}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Failed to update contact"
+        )
+
+
 # Orionis AI Chat Endpoint
 @router.post("/orionis/chat", response_model=ChatResponse)
 async def orionis_chat(chat_request: ChatRequest):
