@@ -3,15 +3,18 @@ import { Card, CardContent } from '../components/ui/card';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Badge } from '../components/ui/badge';
-import { Mail, Phone, Calendar, CheckCircle, Search, Lock } from 'lucide-react';
+import { Mail, Phone, Calendar, CheckCircle, Search, Lock, RefreshCw, Download, LogOut, Trash2, Copy, MessageCircle, TrendingUp, Clock, Users } from 'lucide-react';
+import { useToast } from '../hooks/use-toast';
 
 const Admin = () => {
+  const { toast } = useToast();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [password, setPassword] = useState('');
   const [contacts, setContacts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [filterStatus, setFilterStatus] = useState('all');
+  const [sortOrder, setSortOrder] = useState('newest');
 
   const ADMIN_PASSWORD = 'orion2024';
   const API_URL = process.env.REACT_APP_BACKEND_URL;
@@ -48,6 +51,10 @@ const Admin = () => {
       });
       const data = await response.json();
       if (data.success) {
+        toast({
+          title: '✅ Marcada como lida',
+          duration: 2000
+        });
         fetchContacts();
       }
     } catch (error) {
@@ -55,19 +62,78 @@ const Admin = () => {
     }
   };
 
-  const filteredContacts = contacts.filter(contact => {
-    const matchesSearch = 
-      contact.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      contact.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      contact.message.toLowerCase().includes(searchTerm.toLowerCase());
+  const copyEmail = (email) => {
+    navigator.clipboard.writeText(email);
+    toast({
+      title: '📋 Email copiado!',
+      duration: 2000
+    });
+  };
+
+  const exportToCSV = () => {
+    const csv = [
+      ['Nome', 'Email', 'Telefone', 'Serviço', 'Mensagem', 'Status', 'Data'],
+      ...filteredContacts.map(c => [
+        c.name,
+        c.email,
+        c.phone || '',
+        c.service,
+        c.message.replace(/,/g, ';'),
+        c.status,
+        new Date(c.createdAt).toLocaleString('pt-BR')
+      ])
+    ].map(row => row.join(',')).join('\n');
+
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `contatos_${new Date().toISOString().split('T')[0]}.csv`;
+    a.click();
     
-    const matchesStatus = 
-      filterStatus === 'all' || 
-      (filterStatus === 'new' && contact.status === 'new') ||
-      (filterStatus === 'read' && contact.status === 'read');
-    
-    return matchesSearch && matchesStatus;
-  });
+    toast({
+      title: '📥 CSV exportado!',
+      duration: 2000
+    });
+  };
+
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    setPassword('');
+  };
+
+  const getStats = () => {
+    const today = new Date().setHours(0, 0, 0, 0);
+    return {
+      total: contacts.length,
+      new: contacts.filter(c => c.status === 'new').length,
+      today: contacts.filter(c => new Date(c.createdAt).setHours(0, 0, 0, 0) === today).length
+    };
+  };
+
+  const filteredContacts = contacts
+    .filter(contact => {
+      const matchesSearch = 
+        contact.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        contact.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        contact.message.toLowerCase().includes(searchTerm.toLowerCase());
+      
+      const matchesStatus = 
+        filterStatus === 'all' || 
+        (filterStatus === 'new' && contact.status === 'new') ||
+        (filterStatus === 'read' && contact.status === 'read');
+      
+      return matchesSearch && matchesStatus;
+    })
+    .sort((a, b) => {
+      if (sortOrder === 'newest') {
+        return new Date(b.createdAt) - new Date(a.createdAt);
+      } else {
+        return new Date(a.createdAt) - new Date(b.createdAt);
+      }
+    });
+
+  const stats = getStats();
 
   if (!isAuthenticated) {
     return (
@@ -100,41 +166,135 @@ const Admin = () => {
   return (
     <div className="min-h-screen bg-gray-950 pt-20 pb-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold text-white mb-2">Painel Admin</h1>
-          <p className="text-gray-400">Gerencie as mensagens de contato</p>
-        </div>
-
-        {/* Filters */}
-        <div className="grid md:grid-cols-3 gap-4 mb-6">
-          <div className="md:col-span-2">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-              <Input
-                placeholder="Buscar por nome, email ou mensagem..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 bg-gray-900 border-gray-800 text-white"
-              />
-            </div>
+        <div className="flex items-center justify-between mb-8">
+          <div>
+            <h1 className="text-4xl font-bold text-white mb-2">Painel Admin</h1>
+            <p className="text-gray-400">Gerencie as mensagens de contato</p>
           </div>
           <div className="flex gap-2">
             <Button
-              variant={filterStatus === 'all' ? 'default' : 'outline'}
-              onClick={() => setFilterStatus('all')}
-              className="flex-1"
+              variant="outline"
+              onClick={fetchContacts}
+              disabled={loading}
+              className="border-gray-700 hover:bg-gray-800"
             >
-              Todas ({contacts.length})
+              <RefreshCw className={`w-4 h-4 mr-2 ${loading ? 'animate-spin' : ''}`} />
+              Atualizar
             </Button>
             <Button
-              variant={filterStatus === 'new' ? 'default' : 'outline'}
-              onClick={() => setFilterStatus('new')}
-              className="flex-1"
+              variant="outline"
+              onClick={exportToCSV}
+              className="border-gray-700 hover:bg-gray-800"
             >
-              Novas ({contacts.filter(c => c.status === 'new').length})
+              <Download className="w-4 h-4 mr-2" />
+              Exportar CSV
+            </Button>
+            <Button
+              variant="outline"
+              onClick={handleLogout}
+              className="border-red-700 text-red-400 hover:bg-red-950"
+            >
+              <LogOut className="w-4 h-4 mr-2" />
+              Sair
             </Button>
           </div>
         </div>
+
+        {/* Stats Cards */}
+        <div className="grid md:grid-cols-4 gap-4 mb-6">
+          <Card className="bg-gradient-to-br from-blue-600 to-blue-700 border-0">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-blue-100 text-sm mb-1">Total</p>
+                  <p className="text-3xl font-bold text-white">{stats.total}</p>
+                </div>
+                <Users className="w-10 h-10 text-blue-200" />
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-gradient-to-br from-green-600 to-green-700 border-0">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-green-100 text-sm mb-1">Novas</p>
+                  <p className="text-3xl font-bold text-white">{stats.new}</p>
+                </div>
+                <TrendingUp className="w-10 h-10 text-green-200" />
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-gradient-to-br from-purple-600 to-purple-700 border-0">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-purple-100 text-sm mb-1">Hoje</p>
+                  <p className="text-3xl font-bold text-white">{stats.today}</p>
+                </div>
+                <Clock className="w-10 h-10 text-purple-200" />
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-gradient-to-br from-cyan-600 to-cyan-700 border-0">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-cyan-100 text-sm mb-1">Taxa Resposta</p>
+                  <p className="text-3xl font-bold text-white">
+                    {contacts.length > 0 ? Math.round((stats.total - stats.new) / stats.total * 100) : 0}%
+                  </p>
+                </div>
+                <CheckCircle className="w-10 h-10 text-cyan-200" />
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Filters */}
+        <Card className="bg-gray-900 border-gray-800 mb-6">
+          <CardContent className="p-4">
+            <div className="grid md:grid-cols-4 gap-4">
+              <div className="md:col-span-2">
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                  <Input
+                    placeholder="Buscar por nome, email ou mensagem..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="pl-10 bg-gray-800 border-gray-700 text-white"
+                  />
+                </div>
+              </div>
+              <div className="flex gap-2">
+                <Button
+                  variant={filterStatus === 'all' ? 'default' : 'outline'}
+                  onClick={() => setFilterStatus('all')}
+                  className="flex-1"
+                >
+                  Todas
+                </Button>
+                <Button
+                  variant={filterStatus === 'new' ? 'default' : 'outline'}
+                  onClick={() => setFilterStatus('new')}
+                  className="flex-1"
+                >
+                  Novas
+                </Button>
+              </div>
+              <select
+                value={sortOrder}
+                onChange={(e) => setSortOrder(e.target.value)}
+                className="px-3 py-2 bg-gray-800 border border-gray-700 rounded-md text-white text-sm"
+              >
+                <option value="newest">Mais Recentes</option>
+                <option value="oldest">Mais Antigas</option>
+              </select>
+            </div>
+          </CardContent>
+        </Card>
 
         {/* Contacts List */}
         {loading ? (
@@ -158,15 +318,24 @@ const Admin = () => {
                         </Badge>
                       </div>
                       <div className="flex flex-wrap gap-4 text-sm text-gray-400">
-                        <div className="flex items-center gap-2">
+                        <button
+                          onClick={() => copyEmail(contact.email)}
+                          className="flex items-center gap-2 hover:text-blue-400 transition-colors"
+                        >
                           <Mail className="w-4 h-4" />
                           {contact.email}
-                        </div>
+                          <Copy className="w-3 h-3" />
+                        </button>
                         {contact.phone && (
-                          <div className="flex items-center gap-2">
-                            <Phone className="w-4 h-4" />
+                          <a
+                            href={`https://wa.me/55${contact.phone.replace(/\D/g, '')}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-2 hover:text-green-400 transition-colors"
+                          >
+                            <MessageCircle className="w-4 h-4" />
                             {contact.phone}
-                          </div>
+                          </a>
                         )}
                         <div className="flex items-center gap-2">
                           <Calendar className="w-4 h-4" />
@@ -180,19 +349,21 @@ const Admin = () => {
                         </div>
                       </div>
                     </div>
-                    {contact.status === 'new' && (
-                      <Button
-                        size="sm"
-                        onClick={() => markAsRead(contact.id)}
-                        className="bg-blue-600 hover:bg-blue-700"
-                      >
-                        <CheckCircle className="w-4 h-4 mr-2" />
-                        Marcar como Lida
-                      </Button>
-                    )}
+                    <div className="flex gap-2">
+                      {contact.status === 'new' && (
+                        <Button
+                          size="sm"
+                          onClick={() => markAsRead(contact.id)}
+                          className="bg-blue-600 hover:bg-blue-700"
+                        >
+                          <CheckCircle className="w-4 h-4 mr-2" />
+                          Marcar Lida
+                        </Button>
+                      )}
+                    </div>
                   </div>
                   <div className="bg-gray-800/50 p-4 rounded-lg">
-                    <p className="text-gray-300 leading-relaxed">{contact.message}</p>
+                    <p className="text-gray-300 leading-relaxed whitespace-pre-wrap">{contact.message}</p>
                   </div>
                 </CardContent>
               </Card>
