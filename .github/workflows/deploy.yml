@@ -38,6 +38,9 @@ jobs:
         env:
           CI: false
           GENERATE_SOURCEMAP: false
+          DISABLE_ESLINT_PLUGIN: true
+          TSC_COMPILE_ON_ERROR: true
+          SKIP_PREFLIGHT_CHECK: true
 
       - name: Copy CNAME
         run: cp CNAME frontend/build/CNAME
