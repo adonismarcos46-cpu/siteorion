@@ -39,7 +39,7 @@ jobs:
           CI: false
 
       - name: Copy CNAME
-        run: cp CNAME frontend/build/CNAME || true
+        run: cp CNAME frontend/build/CNAME
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
