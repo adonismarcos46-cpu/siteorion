@@ -26,7 +26,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "16"
 
       - name: Install dependencies
         working-directory: ./frontend
@@ -37,6 +37,7 @@ jobs:
         run: npm run build
         env:
           CI: false
+          GENERATE_SOURCEMAP: false
 
       - name: Copy CNAME
         run: cp CNAME frontend/build/CNAME
