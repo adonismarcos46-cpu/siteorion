@@ -32,6 +32,13 @@ jobs:
         working-directory: ./frontend
         run: yarn install --ignore-engines --network-timeout 300000
 
+      - name: Fix ajv conflict in fork-ts-checker
+        working-directory: ./frontend
+        run: |
+          rm -rf node_modules/fork-ts-checker-webpack-plugin/node_modules/ajv-keywords
+          rm -rf node_modules/fork-ts-checker-webpack-plugin/node_modules/ajv
+          rm -rf node_modules/fork-ts-checker-webpack-plugin/node_modules/schema-utils
+
       - name: Build
         working-directory: ./frontend
         run: yarn build
