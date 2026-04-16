@@ -26,15 +26,15 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: "16"
+          node-version: "20"
 
       - name: Install dependencies
         working-directory: ./frontend
-        run: npm install --legacy-peer-deps
+        run: yarn install --ignore-engines --network-timeout 300000
 
       - name: Build
         working-directory: ./frontend
-        run: npm run build
+        run: yarn build
         env:
           CI: false
           GENERATE_SOURCEMAP: false
